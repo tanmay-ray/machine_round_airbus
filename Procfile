@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* com.challenge.UserApp
+web: java -jar target/user-service-1.0.jar
