@@ -1,20 +1,20 @@
 package com.challenge.util;
 
-import com.challenge.dto.UserAuthRequestDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-public class JwtUtil {
+public final class JwtUtil {
     private JwtUtil() {}
 
-    private static String SECRET_KEY = "secret";
+    private static final String SECRET_KEY = "secret";
 
-    public static String extractEmail(String token) {
+    public static String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
@@ -28,9 +28,9 @@ public class JwtUtil {
     }
 
 
-    public static String generateToken(UserAuthRequestDTO userAuthRequestDTO) {
+    public static String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userAuthRequestDTO.getEmail());
+        return createToken(claims, userDetails.getUsername());
     }
 
     private static String createToken(Map<String, Object> claims, String subject) {
@@ -38,8 +38,8 @@ public class JwtUtil {
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
     }
 
-    public static Boolean validateToken(String token, UserAuthRequestDTO userAuthRequestDTO) {
-        final String username = extractEmail(token);
-        return username.equals(userAuthRequestDTO.getEmail());
+    public static Boolean validateToken(String token, UserDetails userDetails) {
+        final String username = extractUsername(token);
+        return username.equals(userDetails.getUsername());
     }
 }

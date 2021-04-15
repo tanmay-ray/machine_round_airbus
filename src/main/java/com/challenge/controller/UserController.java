@@ -4,6 +4,7 @@ import com.challenge.dto.NewUserDTO;
 import com.challenge.dto.UserDTO;
 import com.challenge.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,13 +22,9 @@ public class UserController {
     }
 
     @GetMapping("users")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<UserDTO> getUserList() {
         return userService.getUserList();
-    }
-
-    @PostMapping("user")
-    public Long createUser(@RequestBody NewUserDTO newUser) throws Exception {
-        return userService.createUser(newUser);
     }
 
 }

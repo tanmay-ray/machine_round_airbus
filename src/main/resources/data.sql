@@ -6,3 +6,6 @@ VALUES ('ADMIN', 'Admin user can view, delete the details of all users and modif
 
 INSERT INTO ROLE (ROLE_KEY, ROLE_DESCRIPTION)
 VALUES ('GENERAL', 'General user can view, delete, modify their own details');
+
+INSERT INTO USER_AUTH (EMAIL, PASSWORD, ROLE_ID)
+VALUES ('tanmayray94@gmail.com', 'admin', 1);

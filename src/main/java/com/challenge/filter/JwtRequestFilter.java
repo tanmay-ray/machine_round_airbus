@@ -1,13 +1,12 @@
 package com.challenge.filter;
 
-import com.challenge.dto.UserAuthRequestDTO;
 import com.challenge.service.UserAuthService;
-import com.challenge.util.AuthUtil;
 import com.challenge.util.JwtUtil;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -35,16 +34,16 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
-            email = JwtUtil.extractEmail(jwt);
+            email = JwtUtil.extractUsername(jwt);
         }
 
 
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserAuthRequestDTO userAuthRequestDTO = AuthUtil.entityToDTO(this.userAuthService.loadUserByUsername(email));
+            UserDetails userDetails = userAuthService.loadUserByUsername(email);
 
-            if (JwtUtil.validateToken(jwt, userAuthRequestDTO)) {
+            if (JwtUtil.validateToken(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                        userAuthRequestDTO, null, null);
+                        userDetails, null, userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken
                         .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);

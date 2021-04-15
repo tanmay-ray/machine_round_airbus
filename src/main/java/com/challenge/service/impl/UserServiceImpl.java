@@ -1,7 +1,6 @@
 package com.challenge.service.impl;
 
 import com.challenge.dto.NewUserDTO;
-import com.challenge.dto.UserAuthRequestDTO;
 import com.challenge.dto.UserDTO;
 import com.challenge.repository.UserRepository;
 import com.challenge.repository.entity.UserEntity;
@@ -45,16 +44,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Long createUser(NewUserDTO newUser) throws Exception {
+    public void createUser(NewUserDTO newUser) {
         newUser.setAge(calcAge(newUser.getDob()));
-        Long userId = userRepository.save(UserUtil.dtoToEntity(newUser)).getUserId();
-
-        UserAuthRequestDTO userAuthDTO = UserAuthRequestDTO.builder()
-                .userId(userId)
-                .email(newUser.getEmail())
-                .password(newUser.getPassword())
-                .build();
-
-        return authService.registerUser(userAuthDTO);
+        userRepository.save(UserUtil.dtoToEntity(newUser));
     }
 }

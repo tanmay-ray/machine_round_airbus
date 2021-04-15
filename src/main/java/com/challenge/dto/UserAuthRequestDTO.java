@@ -8,4 +8,11 @@ import lombok.Data;
 public class UserAuthRequestDTO {
     private String email;
     private String password;
+
+    @Override
+    public String toString() {
+        return "UserAuthRequestDTO{" +
+                "email='" + email + '\'' +
+                '}';
+    }
 }
