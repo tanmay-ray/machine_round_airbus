@@ -5,3 +5,5 @@ spring:
   datasource:
     platform: h2
     url: jdbc:h2:mem:schema
+server:
+  port: 0
