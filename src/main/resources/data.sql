@@ -8,4 +8,4 @@ INSERT INTO ROLE (ROLE_KEY, ROLE_DESCRIPTION)
 VALUES ('GENERAL', 'General user can view, delete, modify their own details');
 
 INSERT INTO USER_AUTH (EMAIL, PASSWORD, ROLE_ID)
-VALUES ('tanmayray94@gmail.com', 'admin', 1);
+VALUES ('tanmayray94@gmail.com', '$2a$10$wMYugw9.tkVPLPzKkjCOUuZFzn/uYhH1TUCyXJNOTzNyQyWSs/bpe', 1);
