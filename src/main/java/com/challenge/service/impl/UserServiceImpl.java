@@ -31,8 +31,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUser(Long userId) throws Exception {
-        UserEntity userEntity = userRepository.findById(userId).orElseThrow(Exception::new);
+    public UserDTO getUser(String email) throws Exception {
+        UserEntity userEntity = userRepository.findByEmail(email).orElseThrow(Exception::new);
         return UserUtil.entityToDTO(userEntity);
     }
 

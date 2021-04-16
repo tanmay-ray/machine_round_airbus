@@ -1,6 +1,5 @@
 package com.challenge.controller;
 
-import com.challenge.dto.NewUserDTO;
 import com.challenge.dto.UserDTO;
 import com.challenge.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,8 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("user/{userId}")
-    public UserDTO getUser(@PathVariable Long userId) throws Exception {
-        return userService.getUser(userId);
+    public UserDTO getUser(@PathVariable String email) throws Exception {
+        return userService.getUser(email);
     }
 
     @GetMapping("users")

@@ -6,7 +6,7 @@ import com.challenge.dto.UserDTO;
 import java.util.List;
 
 public interface UserService {
-    UserDTO getUser(Long userId) throws Exception;
+    UserDTO getUser(String email) throws Exception;
     List<UserDTO> getUserList();
     void createUser(NewUserDTO newUser);
 }

@@ -45,6 +45,7 @@ public class AuthServiceImpl implements UserAuthService {
         List<GrantedAuthority> authorities = Collections.singletonList(
                 new SimpleGrantedAuthority(userAuthEntity.getRole().getRoleKey())
         );
+
         return new User(userAuthEntity.getEmail(), userAuthEntity.getPassword(), authorities);
     }
 }
