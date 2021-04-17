@@ -23,10 +23,10 @@ import java.util.List;
 public class AuthServiceImpl implements UserAuthService {
 
     @Autowired
-    UserAuthRepository userAuthRepository;
+    private UserAuthRepository userAuthRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
 
     @Override
@@ -44,7 +44,7 @@ public class AuthServiceImpl implements UserAuthService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) {
         UserAuthEntity userAuthEntity = userAuthRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Invalid email"));
         List<GrantedAuthority> authorities = Collections.singletonList(
