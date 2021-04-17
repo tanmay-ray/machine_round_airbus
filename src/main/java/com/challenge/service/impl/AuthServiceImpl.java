@@ -30,6 +30,11 @@ public class AuthServiceImpl implements UserAuthService {
 
 
     @Override
+    public Boolean isValidEmail(String email) {
+        return !userAuthRepository.findByEmail(email).isPresent();
+    }
+
+    @Override
     public UserAuthResponseDTO registerUser(UserAuthRequestDTO newUser) throws Exception {
         UserAuthEntity authEntity = AuthUtil.dtoToEntity(newUser);
         authEntity.setRole(roleRepository.findByRoleKey("GENERAL").orElseThrow(Exception::new));

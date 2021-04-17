@@ -26,6 +26,7 @@ public class UserEntity {
 
     private String gender;
 
+    @Column(unique = true)
     private String email;
 
     private Long phone;

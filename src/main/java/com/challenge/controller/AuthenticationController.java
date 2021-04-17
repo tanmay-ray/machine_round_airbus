@@ -11,10 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
@@ -57,5 +54,10 @@ public class AuthenticationController {
                         .password(pwd)
                         .build()
         );
+    }
+
+    @GetMapping("is-valid-email/{email}")
+    public Boolean isValidEmail(@PathVariable String email) {
+        return userAuthService.isValidEmail(email);
     }
 }

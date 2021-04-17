@@ -48,4 +48,5 @@ public class UserServiceImpl implements UserService {
         newUser.setAge(calcAge(newUser.getDob()));
         userRepository.save(UserUtil.dtoToEntity(newUser));
     }
+
 }

@@ -15,7 +15,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("user/{userId}")
+    @GetMapping("user/{email}")
     public UserDTO getUser(@PathVariable String email) throws Exception {
         return userService.getUser(email);
     }

@@ -6,5 +6,6 @@ import com.challenge.repository.entity.UserAuthEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserAuthService extends UserDetailsService {
+    Boolean isValidEmail(String email);
     UserAuthResponseDTO registerUser(UserAuthRequestDTO user) throws Exception;
 }
