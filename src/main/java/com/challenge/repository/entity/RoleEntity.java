@@ -1,12 +1,12 @@
 package com.challenge.repository.entity;
 
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Builder;
+import lombok.Data;
 
 import javax.persistence.*;
 
-@Getter
-@ToString
+@Data
+@Builder
 @Entity
 @Table(name = "ROLE")
 public class RoleEntity {

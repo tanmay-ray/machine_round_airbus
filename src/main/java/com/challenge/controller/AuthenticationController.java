@@ -44,16 +44,19 @@ public class AuthenticationController {
     }
 
     @PostMapping("register")
-    public UserAuthResponseDTO registerUser(@RequestBody NewUserDTO newUser) throws Exception {
-
+    public UserAuthResponseDTO registerUser(@RequestBody NewUserDTO newUser) {
+        String generalRole = "GENERAL";
         userService.createUser(newUser);
+
         final String pwd = passwordEncoder.encode(newUser.getPassword());
-        return userAuthService.registerUser(
+        final UserDetails userDetails =  userAuthService.registerUser(
                 UserAuthRequestDTO.builder()
                         .email(newUser.getEmail())
                         .password(pwd)
-                        .build()
+                        .build(),
+                generalRole
         );
+        return UserAuthResponseDTO.builder().jwt(JwtUtil.generateToken(userDetails)).build();
     }
 
     @GetMapping("is-valid-email/{email}")

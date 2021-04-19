@@ -1,13 +1,12 @@
 package com.challenge.service.impl;
 
 import com.challenge.dto.UserAuthRequestDTO;
-import com.challenge.dto.UserAuthResponseDTO;
+import com.challenge.exception.RoleNotFoundException;
 import com.challenge.repository.UserAuthRepository;
 import com.challenge.repository.RoleRepository;
 import com.challenge.repository.entity.UserAuthEntity;
 import com.challenge.service.UserAuthService;
 import com.challenge.util.AuthUtil;
-import com.challenge.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -35,12 +34,17 @@ public class AuthServiceImpl implements UserAuthService {
     }
 
     @Override
-    public UserAuthResponseDTO registerUser(UserAuthRequestDTO newUser) throws Exception {
-        UserAuthEntity authEntity = AuthUtil.dtoToEntity(newUser);
-        authEntity.setRole(roleRepository.findByRoleKey("GENERAL").orElseThrow(Exception::new));
-        authEntity = userAuthRepository.save(authEntity);
-        UserDetails userDetails = loadUserByUsername(authEntity.getEmail());
-        return UserAuthResponseDTO.builder().jwt(JwtUtil.generateToken(userDetails)).build();
+    public UserDetails registerUser(UserAuthRequestDTO newUser, String role) {
+        UserAuthEntity userAuthEntity = AuthUtil.dtoToEntity(newUser);
+        userAuthEntity.setRole(roleRepository.findByRoleKey(role)
+                .orElseThrow(() -> new RoleNotFoundException(role)));
+
+        userAuthEntity = userAuthRepository.save(userAuthEntity);
+        List<GrantedAuthority> authorities = Collections.singletonList(
+                new SimpleGrantedAuthority(userAuthEntity.getRole().getRoleKey())
+        );
+
+        return new User(userAuthEntity.getEmail(), userAuthEntity.getPassword(), authorities);
     }
 
     @Override
