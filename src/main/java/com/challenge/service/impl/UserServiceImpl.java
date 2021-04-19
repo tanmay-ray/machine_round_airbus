@@ -8,6 +8,7 @@ import com.challenge.service.UserAuthService;
 import com.challenge.service.UserService;
 import com.challenge.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -31,8 +32,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUser(String email) throws Exception {
-        UserEntity userEntity = userRepository.findByEmail(email).orElseThrow(Exception::new);
+    public UserDTO getUser(String email) {
+        UserEntity userEntity = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("No user exists with email: " + email));
         return UserUtil.entityToDTO(userEntity);
     }
 
