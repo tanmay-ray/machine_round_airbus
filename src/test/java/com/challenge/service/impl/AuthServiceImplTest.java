@@ -1,11 +1,12 @@
 package com.challenge.service.impl;
 
-import com.challenge.dto.UserAuthRequestDTO;
+import com.challenge.dto.NewUserDTO;
 import com.challenge.exception.RoleNotFoundException;
 import com.challenge.repository.RoleRepository;
 import com.challenge.repository.UserAuthRepository;
 import com.challenge.repository.entity.RoleEntity;
 import com.challenge.repository.entity.UserAuthEntity;
+import com.challenge.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -19,6 +20,7 @@ import java.util.Optional;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -32,6 +34,9 @@ public class AuthServiceImplTest {
 
     @Mock
     private RoleRepository roleRepository;
+
+    @Mock
+    private UserService userService;
 
     @Test
     public void isValidEmailTest_whenPresent() {
@@ -51,12 +56,13 @@ public class AuthServiceImplTest {
     @Test(expected = RoleNotFoundException.class)
     public void registerUserTest_roleNotFound() {
         when(roleRepository.findByRoleKey(anyString())).thenReturn(Optional.empty());
-        authService.registerUser(UserAuthRequestDTO.builder()
+        authService.registerUser(NewUserDTO.newUserDTOBuilder()
                 .email("someone@gmail.com").password("qwerty").build(), "INVALID_ROLE");
     }
 
     @Test
     public void registerUserTest() {
+        NewUserDTO newUser = NewUserDTO.newUserDTOBuilder().email("someone@gmail.com").password("qwerty").build();
         RoleEntity roleEntity = RoleEntity.builder().roleId(2L).roleKey("GENERAL").build();
         UserAuthEntity entity = UserAuthEntity.builder()
                 .email("someone@gmail.com").password("qwerty")
@@ -66,9 +72,9 @@ public class AuthServiceImplTest {
                 .thenReturn(Optional.of(roleEntity));
         when(userAuthRepository.save(any())).thenReturn(entity);
 
-        UserDetails details = authService.registerUser(UserAuthRequestDTO.builder()
-                .email("someone@gmail.com").password("qwerty").build(), "GENERAL");
+        UserDetails details = authService.registerUser(newUser, "GENERAL");
 
+        verify(userService).createUser(newUser);
         assertEquals("someone@gmail.com", details.getUsername());
         assertEquals("qwerty", details.getPassword());
         assertEquals(1, details.getAuthorities().size());

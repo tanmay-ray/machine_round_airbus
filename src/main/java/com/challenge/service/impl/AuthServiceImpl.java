@@ -1,11 +1,13 @@
 package com.challenge.service.impl;
 
+import com.challenge.dto.NewUserDTO;
 import com.challenge.dto.UserAuthRequestDTO;
 import com.challenge.exception.RoleNotFoundException;
 import com.challenge.repository.UserAuthRepository;
 import com.challenge.repository.RoleRepository;
 import com.challenge.repository.entity.UserAuthEntity;
 import com.challenge.service.UserAuthService;
+import com.challenge.service.UserService;
 import com.challenge.util.AuthUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,6 +26,9 @@ public class AuthServiceImpl implements UserAuthService {
 
     @Autowired
     private UserAuthRepository userAuthRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -34,8 +40,12 @@ public class AuthServiceImpl implements UserAuthService {
     }
 
     @Override
-    public UserDetails registerUser(UserAuthRequestDTO newUser, String role) {
-        UserAuthEntity userAuthEntity = AuthUtil.dtoToEntity(newUser);
+    @Transactional
+    public UserDetails registerUser(NewUserDTO newUser, String role) {
+        UserAuthEntity userAuthEntity = AuthUtil.dtoToEntity(UserAuthRequestDTO.builder()
+                .email(newUser.getEmail())
+                .password(newUser.getPassword())
+                .build());
         userAuthEntity.setRole(roleRepository.findByRoleKey(role)
                 .orElseThrow(() -> new RoleNotFoundException(role)));
 
@@ -44,6 +54,7 @@ public class AuthServiceImpl implements UserAuthService {
                 new SimpleGrantedAuthority(userAuthEntity.getRole().getRoleKey())
         );
 
+        userService.createUser(newUser);
         return new User(userAuthEntity.getEmail(), userAuthEntity.getPassword(), authorities);
     }
 

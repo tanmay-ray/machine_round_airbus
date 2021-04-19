@@ -43,7 +43,7 @@ public class UserServiceImplTest {
     @Test(expected = UsernameNotFoundException.class)
     public void getUserTest_userNotFound() {
         when(userRepository.findByEmail(anyString())).thenThrow(new UsernameNotFoundException("Username not found"));
-        UserDTO user = userService.getUser("john.doe@gmail.com");
+        userService.getUser("john.doe@gmail.com");
     }
 
     @Test

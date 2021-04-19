@@ -4,7 +4,6 @@ import com.challenge.dto.NewUserDTO;
 import com.challenge.dto.UserAuthRequestDTO;
 import com.challenge.dto.UserAuthResponseDTO;
 import com.challenge.service.UserAuthService;
-import com.challenge.service.UserService;
 import com.challenge.util.JwtUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,13 +33,10 @@ public class AuthenticationControllerTest {
     private UserAuthService userAuthService;
 
     @Mock
-    private UserService userService;
+    private AuthenticationManager authenticationManager;
 
     @Mock
     private PasswordEncoder passwordEncoder;
-
-    @Mock
-    private AuthenticationManager authenticationManager;
 
     UserDetails userDetails = new User("someone@gmail.com", "qwerty",
             Collections.singletonList(new SimpleGrantedAuthority("GENERAL")));
@@ -81,10 +77,9 @@ public class AuthenticationControllerTest {
     @Test
     public void registerUserTest() {
         NewUserDTO newUser = NewUserDTO.newUserDTOBuilder().build();
-        String role = "GENERAL";
         when(userAuthService.registerUser(any(), anyString())).thenReturn(userDetails);
         UserAuthResponseDTO respone = authenticationController.registerUser(newUser);
-        verify(userService).createUser(newUser);
+
         assertEquals(jwt, respone.getJwt());
     }
 

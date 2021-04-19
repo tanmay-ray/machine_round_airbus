@@ -4,7 +4,6 @@ import com.challenge.dto.NewUserDTO;
 import com.challenge.dto.UserAuthRequestDTO;
 import com.challenge.dto.UserAuthResponseDTO;
 import com.challenge.service.UserAuthService;
-import com.challenge.service.UserService;
 import com.challenge.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,9 +18,6 @@ public class AuthenticationController {
 
     @Autowired
     private UserAuthService userAuthService;
-
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -45,17 +41,10 @@ public class AuthenticationController {
 
     @PostMapping("register")
     public UserAuthResponseDTO registerUser(@RequestBody NewUserDTO newUser) {
-        String generalRole = "GENERAL";
-        userService.createUser(newUser);
-
+        final String generalRole = "GENERAL";
         final String pwd = passwordEncoder.encode(newUser.getPassword());
-        final UserDetails userDetails =  userAuthService.registerUser(
-                UserAuthRequestDTO.builder()
-                        .email(newUser.getEmail())
-                        .password(pwd)
-                        .build(),
-                generalRole
-        );
+        newUser.setPassword(pwd);
+        final UserDetails userDetails =  userAuthService.registerUser(newUser, generalRole);
         return UserAuthResponseDTO.builder().jwt(JwtUtil.generateToken(userDetails)).build();
     }
 
