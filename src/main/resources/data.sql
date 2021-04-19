@@ -6,37 +6,37 @@ VALUES ('GENERAL', 'General user can view, delete, modify their own details');
 
 
 INSERT INTO USER_AUTH (EMAIL, PASSWORD, ROLE_ID)
-VALUES ('tanmay.ray@gmail.com', '$2a$10$wMYugw9.tkVPLPzKkjCOUuZFzn/uYhH1TUCyXJNOTzNyQyWSs/bpe', 1);
+VALUES ('tanmay.ray@gmail.com', '$2a$10$grALCGNEPOSs5scpVZfbzO7j4baT6KB.GQM02LtBg8BHS0xfdIpv.', 1);
 
 INSERT INTO USER_AUTH (EMAIL, PASSWORD, ROLE_ID)
-VALUES ('john.one@gmail.com', '$2a$10$wMYugw9.tkVPLPzKkjCOUuZFzn/uYhH1TUCyXJNOTzNyQyWSs/bpe', 2);
+VALUES ('john.one@gmail.com', '$2a$10$QyWFKGqZZV.AfdWDsIVr9OQtAOBGMBeUwkvKNytIleiotViEOhy3G', 2);
 
 INSERT INTO USER_AUTH (EMAIL, PASSWORD, ROLE_ID)
-VALUES ('john.two@gmail.com', '$2a$10$wMYugw9.tkVPLPzKkjCOUuZFzn/uYhH1TUCyXJNOTzNyQyWSs/bpe', 2);
+VALUES ('john.two@gmail.com', '$2a$10$QyWFKGqZZV.AfdWDsIVr9OQtAOBGMBeUwkvKNytIleiotViEOhy3G', 2);
 
 INSERT INTO USER_AUTH (EMAIL, PASSWORD, ROLE_ID)
-VALUES ('john.three@gmail.com', '$2a$10$wMYugw9.tkVPLPzKkjCOUuZFzn/uYhH1TUCyXJNOTzNyQyWSs/bpe', 2);
+VALUES ('john.three@gmail.com', '$2a$10$QyWFKGqZZV.AfdWDsIVr9OQtAOBGMBeUwkvKNytIleiotViEOhy3G', 2);
 
 INSERT INTO USER_AUTH (EMAIL, PASSWORD, ROLE_ID)
-VALUES ('jane.four@gmail.com', '$2a$10$wMYugw9.tkVPLPzKkjCOUuZFzn/uYhH1TUCyXJNOTzNyQyWSs/bpe', 2);
+VALUES ('jane.four@gmail.com', '$2a$10$QyWFKGqZZV.AfdWDsIVr9OQtAOBGMBeUwkvKNytIleiotViEOhy3G', 2);
 
 INSERT INTO USER_AUTH (EMAIL, PASSWORD, ROLE_ID)
-VALUES ('john.five@gmail.com', '$2a$10$wMYugw9.tkVPLPzKkjCOUuZFzn/uYhH1TUCyXJNOTzNyQyWSs/bpe', 2);
+VALUES ('john.five@gmail.com', '$2a$10$QyWFKGqZZV.AfdWDsIVr9OQtAOBGMBeUwkvKNytIleiotViEOhy3G', 2);
 
 INSERT INTO USER_AUTH (EMAIL, PASSWORD, ROLE_ID)
-VALUES ('john.six@gmail.com', '$2a$10$wMYugw9.tkVPLPzKkjCOUuZFzn/uYhH1TUCyXJNOTzNyQyWSs/bpe', 2);
+VALUES ('john.six@gmail.com', '$2a$10$QyWFKGqZZV.AfdWDsIVr9OQtAOBGMBeUwkvKNytIleiotViEOhy3G', 2);
 
 INSERT INTO USER_AUTH (EMAIL, PASSWORD, ROLE_ID)
-VALUES ('jane.seven@gmail.com', '$2a$10$wMYugw9.tkVPLPzKkjCOUuZFzn/uYhH1TUCyXJNOTzNyQyWSs/bpe', 2);
+VALUES ('jane.seven@gmail.com', '$2a$10$QyWFKGqZZV.AfdWDsIVr9OQtAOBGMBeUwkvKNytIleiotViEOhy3G', 2);
 
 INSERT INTO USER_AUTH (EMAIL, PASSWORD, ROLE_ID)
-VALUES ('john.eight@gmail.com', '$2a$10$wMYugw9.tkVPLPzKkjCOUuZFzn/uYhH1TUCyXJNOTzNyQyWSs/bpe', 2);
+VALUES ('john.eight@gmail.com', '$2a$10$QyWFKGqZZV.AfdWDsIVr9OQtAOBGMBeUwkvKNytIleiotViEOhy3G', 2);
 
 INSERT INTO USER_AUTH (EMAIL, PASSWORD, ROLE_ID)
-VALUES ('jane.nine@gmail.com', '$2a$10$wMYugw9.tkVPLPzKkjCOUuZFzn/uYhH1TUCyXJNOTzNyQyWSs/bpe', 2);
+VALUES ('jane.nine@gmail.com', '$2a$10$QyWFKGqZZV.AfdWDsIVr9OQtAOBGMBeUwkvKNytIleiotViEOhy3G', 2);
 
 INSERT INTO USER_AUTH (EMAIL, PASSWORD, ROLE_ID)
-VALUES ('jane.ten@gmail.com', '$2a$10$wMYugw9.tkVPLPzKkjCOUuZFzn/uYhH1TUCyXJNOTzNyQyWSs/bpe', 2);
+VALUES ('jane.ten@gmail.com', '$2a$10$QyWFKGqZZV.AfdWDsIVr9OQtAOBGMBeUwkvKNytIleiotViEOhy3G', 2);
 
 
 INSERT INTO USER_DETAIL (NAME, DOB, AGE, GENDER, EMAIL, PHONE)
